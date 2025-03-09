@@ -1,0 +1,113 @@
+#+options: f:t # for github footnotes to work
+* PDF Fonts Etc.
+Designed to show information about a Portable Document Format (PDF) document fonts and other metadata information.
+
+Three basic commands:
+
+1. ~pdffontetc-display-metadata-org-style~ - Display PDF metadata in a separate buffer in Org-mode style.
+2. ~pdffontetc-display-font-information~ - Show information about the fonts used in a PDF. [Optionally includes explanatory information if called with prefix argument. I.e., if command is preceded by ~C-u~.]
+3. ~pdffontetc-display-combined-metadata-and-font-info~ - Show both of the above in the same temp buffer. [Same optional prefix behaviour as 2.]
+   
+[[file:images/pdffontetc-screenshot01.png]]
+
+[[file:images/pdffontetc-screenshot02.png]]
+
+
+** Remarks, Requirements
+Requires the =pdffonts= utility from Poppler, which is the same PDF toolsuite that the Emacs [[https://github.com/vedang/pdf-tools][PDF Tools package]] uses. And you ideally are also using the PDF Tools package.
+
+The metadata command is more or less functionally equivalent with the one already in PDF Tools (in ~pdf-misc.el~), but displays using Org-mode styling.
+
+The PDF Tools metadata functionality has been around for a while, and I often use it. I was frustrated because I wanted to be able to see information about fonts as well, and would always have to drop out to a terminal to get this information. Now I don't have to anymore.
+
+(I have submitted a [[https://github.com/vedang/pdf-tools/pull/314][pull request]] to merge this functionality into PDF Tools, but in case this doesn't happen and/or in the meantime, it is here as a separate add-on package.)
+
+Maybe shadow PDF Tools ~pdf-misc-minor-mode~ map in your init, or otherwise add convenient keybindings:
+#+begin_src elisp
+(defvar pdf-misc-minor-mode-map
+  (let ((map (make-sparse-keymap)))
+    ;; `I' for `Info', = pdf metadata:
+    (define-key map (kbd "I") #'pdf-misc-display-metadata)
+    ;; `O' for `Org-style' Info, = pdf metadata in orgish display:
+    (define-key map (kbd "O") #'pdffontetc-display-metadata-org-style)
+    ;; `T' for `Typeface', i.e., Font info [since `F' is already taken]:
+    (define-key map (kbd "T") #'pdffontetc-display-font-information)
+    ;; `U' for `Unified' info, i.e., both Metadata and Font info:
+    (define-key map (kbd "U") #'pdffontetc-display-combined-metadata-and-font-info)
+    ;; `c'ommand to `p'rint:
+    (define-key map (kbd "C-c C-p") #'pdf-misc-print-document)
+    map)
+  "Keymap used in `pdf-misc-minor-mode'.")
+#+end_src
+
+** Installation
+Easiest if you're using Emacs 30 or above is the [[https://git.savannah.gnu.org/cgit/emacs.git/commit/?id=2ce279680bf9c1964e98e2aa48a03d6675c386fe][built-in]] ~vc-use-package~. If you use an alternative/supplement package manager already, you probably know what you're doing. Otherwise:
+
+*** Manual
+Clone this repo or copy the ~pdffontetc.el~ file somewhere and load it via =init.el=, e.g., copy to =~/.emacs.d/lisp/pdffontetc/= and put in your =init.el=:
+#+begin_src elisp
+(add-to-list 'load-path
+             "~/.emacs.d/lisp/pdffontetc/")
+  (require 'pdffontetc)
+#+end_src
+
+*** with built-in vc-use-package
+Included in Emacs 30+. Probably the easiest method:
+#+begin_src elisp
+(use-package pdffontetc
+  :vc (pdffontetc :url "https://github.com/emacsomancer/pdffontetc"
+                    :branch "main")
+  :ensure t)
+#+end_src
+*** separately packaged vc-use-package
+The [[https://github.com/slotThe/vc-use-package][non-built-in version]] of vc-use-package uses slightly different syntax:
+#+begin_src elisp
+(use-package pdffontetc
+  :vc (:fetcher github :repo "emacsomancer/pdffontetc")
+  :ensure t)
+#+end_src
+*** elpaca
+With [[https://github.com/progfolio/elpaca][elpaca]]:
+#+begin_src elisp
+(use-package pdffontetc
+  :ensure (:host github :repo "emacsomancer/pdffontetc"))
+#+end_src
+*** straight
+With [[https://github.com/radian-software/straight.el][straight]]:
+#+begin_src elisp
+(use-package pdffontetc
+  :straight (pdffontetc :type git :host github :repo "emacsomancer/pdffontetc")
+  :ensure t)
+#+end_src
+*** quelpa
+With [[https://github.com/quelpa/quelpa][quelpa]]:
+#+begin_src elisp
+(use-package pdffontetc
+  :quelpa (pdffontetc :fetcher github :repo "emacsomancer/pdffontetc")
+  :ensure t)
+#+end_src
+
+** Miscellaneous Notes
+*** The pdffonts help key (in ~pdffontetc-pdffonts-man-help~):
+**** The following information is listed for each font:
+  - =name=: the font name, exactly as given in the PDF file (potentially including
+    a subset prefix)
+  - =type=: the font type -- see below for details
+  - =emb=: "yes" if the font is embedded in the PDF file
+  - =sub=: "yes" if the font is a subset
+  - =uni=: "yes" if there is an explicit ~ToUnicode~ map in the PDF file (the
+    absence of a ~ToUnicode~ map doesn't necessarily mean that the text can't be
+    converted to Unicode)
+  - =object ID=: the font dictionary object ID (number and generation; given here
+    in format ~Number.Generation~)
+
+**** PDF files can contain the following types of fonts:
+   - ~Type 1~
+   - ~Type 1C~ [= Compact Font Format (CFF)]
+   - ~Type 3~
+   - ~TrueType~
+   - ~CID Type 0~ [= 16-bit font with no specified type]
+   - ~CID Type 0C~ [= 16-bit PostScript CFF font]
+   - ~CID TrueType~ [= 16-bit TrueType font]
+
+[ adapted from ~man pdffonts~ ]
