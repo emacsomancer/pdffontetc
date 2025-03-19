@@ -123,6 +123,7 @@ returned list are in the same order as in TREE.
 
 ;;;; pdf metadata function
 
+;;;###autoload
 (defun pdffontetc-display-metadata-org-style (doc &optional combined)
   "Display PDF metadata in a separate buffer in Org-mode style.
 Argument `DOC' defaults to current buffer if it contains a PDF file;
@@ -173,6 +174,7 @@ used when combined with `pdffontetc-display-font-information'."
       (goto-char (point-min)))))
 
 ;;;; PDF Font information
+
 (defvar pdffontetc-pdffonts-man-help
   "** Key to the above font information:
 *** The following information is listed for each font:
@@ -246,6 +248,7 @@ Extracts information from calling `pdffonts' utility on PDF document
                  pdffont-values)))))
     pdffont-values))
 
+;;;###autoload
 (defun pdffontetc-display-font-information (doc &optional combined)
   "Parse the output of `pdffonts' for PDF file `DOC'.
 Information is display in an Org-mode table in a temporary buffer.
@@ -313,6 +316,7 @@ alters behaviour for use with
 
 ;;;; Combined PDF metadata and font information display
 
+;;;###autoload
 (defun pdffontetc-display-combined-metadata-and-font-info (doc)
   "Show combined PDF metadata and font information.
 Operates on PDF document `DOC', either current buffer, or passed
