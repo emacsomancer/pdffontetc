@@ -14,7 +14,7 @@ Three basic commands:
 
 [[file:images/pdffontetc-screenshot02.png]]
 *** PDF generated in some horrible way
-file:images/pdffontsetc-screenshot03.jpg
+[[file:images/pdffontsetc-screenshot03.jpg]]
 
 ** Remarks, Requirements
 Requires the =pdffonts= utility from [[https://poppler.freedesktop.org/][Poppler]], which is the same PDF toolsuite that the Emacs [[https://github.com/vedang/pdf-tools][PDF Tools package]] uses. And you ideally are also using the PDF Tools package.
