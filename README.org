@@ -7,11 +7,14 @@ Three basic commands:
 1. ~pdffontetc-display-metadata-org-style~ - Display PDF metadata in a separate buffer in Org-mode style.
 2. ~pdffontetc-display-font-information~ - Show information about the fonts used in a PDF. [Optionally includes explanatory information if called with prefix argument. I.e., if command is preceded by ~C-u~.]
 3. ~pdffontetc-display-combined-metadata-and-font-info~ - Show both of the above in the same temp buffer. [Same optional prefix behaviour as 2.]
-   
+
+** Some screenshots in action
+*** PDF with lots of metadata & fonts
 [[file:images/pdffontetc-screenshot01.png]]
 
 [[file:images/pdffontetc-screenshot02.png]]
-
+*** PDF generated in some horrible way
+[file:images/pdffontsetc-screenshot03.jpg]
 
 ** Remarks, Requirements
 Requires the =pdffonts= utility from [[https://poppler.freedesktop.org/][Poppler]], which is the same PDF toolsuite that the Emacs [[https://github.com/vedang/pdf-tools][PDF Tools package]] uses. And you ideally are also using the PDF Tools package.
