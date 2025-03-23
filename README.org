@@ -9,7 +9,7 @@ Three basic commands:
 3. ~pdffontetc-display-combined-metadata-and-font-info~ - Show both of the above in the same temp buffer. [Same optional prefix behaviour as 2.]
 
 ** Some screenshots in action
-*** PDF with lots of metadata & fonts
+*** PDF with lots of metadata & fonts[fn:sysinfoenvirons]
 [[file:images/pdffontetc-screenshot01.png]]
 
 [[file:images/pdffontetc-screenshot02.png]]
@@ -110,3 +110,9 @@ With [[https://github.com/quelpa/quelpa][quelpa]]:
    - ~CID TrueType~ [= 16-bit TrueType font]
 
 [ adapted from ~man pdffonts~ ]
+
+#+begin_comment
+FOOTNOTES
+#+end_comment
+
+[fn:sysinfoenvirons] For the ~creator~ field, see nascent [[https://github.com/emacs-bigtop/sysinfo-environs/][package Emacs System Information and Environs]], under the [[https://github.com/emacs-bigtop/sysinfo-environs/#use-2-encode-system-details]["encoding system details" section]].
