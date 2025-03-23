@@ -116,4 +116,4 @@ FOOTNOTES
 #+end_comment
 
 * Notes
-[fn:0] For the ~creator~ field, see nascent [[https://github.com/emacs-bigtop/sysinfo-environs/][package Emacs System Information and Environs]], under the [[https://github.com/emacs-bigtop/sysinfo-environs/#use-2-encode-system-details]["encoding system details" section]].
+[fn:0] For the ~creator~ field, see the nascent [[https://github.com/emacs-bigtop/sysinfo-environs/][Emacs System Information and Environs]] package, under the [[https://github.com/emacs-bigtop/sysinfo-environs/#use-2-encode-system-details]["encoding system details" section]].
