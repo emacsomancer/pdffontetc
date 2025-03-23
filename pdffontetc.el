@@ -54,20 +54,16 @@
 ;;; Advice:
 ;; Maybe shadow PDF-Tools' `pdf-misc-minor-mode-map':
 ;;
-;; (defvar pdf-misc-minor-mode-map
-;;   (let ((map (make-sparse-keymap)))
-;;     ;; `I' for `Info', = pdf metadata:
-;;     (define-key map (kbd "I") #'pdf-misc-display-metadata)
+;; (defun pdffontetc-extra-keys ()
+;;     "Set some additional keybindings in PDF-Tools for pdffontetc info functions."
 ;;     ;; `O' for `Org-style' Info, = pdf metadata in orgish display:
-;;     (define-key map (kbd "O") #'pdffontetc-display-metadata-org-style)
+;;     (local-set-key (kbd "O") #'pdffontetc-display-metadata-org-style)
 ;;     ;; `T' for `Typeface', i.e., Font info [since `F' is already taken]:
-;;     (define-key map (kbd "T") #'pdffontetc-display-font-information)
+;;     (local-set-key (kbd "T") #'pdffontetc-display-font-information)
 ;;     ;; `U' for `Unified' info, i.e., both Metadata and Font info:
-;;     (define-key map (kbd "U") #'pdffontetc-display-combined-metadata-and-font-info)
-;;     ;; `c'ommand to `p'rint:
-;;     (define-key map (kbd "C-c C-p") #'pdf-misc-print-document)
-;;     map)
-;;   "Keymap used in `pdf-misc-minor-mode'.")
+;;     (local-set-key (kbd "U") #'pdffontetc-display-combined-metadata-and-font-info))
+;;
+;; (add-hook 'pdf-view-mode-hook #'pdffontetc-extra-keys)
 
 
 ;;; Notes (for me):
