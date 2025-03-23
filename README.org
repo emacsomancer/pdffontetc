@@ -9,11 +9,13 @@ Three basic commands:
 3. ~pdffontetc-display-combined-metadata-and-font-info~ - Show both of the above in the same temp buffer. [Same optional prefix behaviour as 2.]
 
 ** Some screenshots in action
-*** PDF with lots of metadata & fonts[fn:0]
+#+CAPTION: PDF with lots of metadata & fonts@@html:<a href="#fn:0" class="footnote-ref" role="doc-noteref">⁰</a>@@
 [[file:images/pdffontetc-screenshot01.png]]
 
+#+CAPTION: same PDF, showing end of fonts & interpretation key
 [[file:images/pdffontetc-screenshot02.png]]
-*** PDF generated in some horrible way
+
+#+CAPTION: a different PDF, generated in some horrible way
 [[file:images/pdffontsetc-screenshot03.jpg]]
 
 ** Remarks, Requirements
