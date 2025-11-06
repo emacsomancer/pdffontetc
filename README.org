@@ -111,13 +111,16 @@ With [[https://github.com/quelpa/quelpa][quelpa]]:
 
 [ adapted from ~man pdffonts~ ]
 
-#+begin_comment
-FOOTNOTES
-#+end_comment
+(for more details on PDF font types, see [[https://en.wikipedia.org/wiki/PostScript_fonts][Wikpedia on "PostScript fonts"]])
 
 * Related Packages
 - [[https://github.com/vedang/pdf-tools][PDF Tools]] (obviously): viewing PDFs in Emacs
 - [[https://github.com/krisbalintona/pdf-meta-edit][pdf-meta-edit]]: editing PDF metadata, labels, & bookmarks in Emacs
+
+#+begin_comment
+FOOTNOTES
+#+end_comment
+
 
 * Notes
 [fn:0] For the ~creator~ field, see the nascent [[https://github.com/emacs-bigtop/sysinfo-environs/][Emacs System Information and Environs]] package, under the [[https://github.com/emacs-bigtop/sysinfo-environs/#use-2-encode-system-details]["encoding system details" section]].

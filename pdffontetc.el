@@ -158,7 +158,10 @@ used when combined with `pdffontetc-display-font-information'."
                 (insert "\n"))
             (insert (format "- =%s=: " fname))
             ;; don't format empty strings or values
-            (if (or (null fval) (string-empty-p fval))
+            (if (or (null fval)
+                    ;; the following line avoids errors on 'keywords if not a string, but should be fixed ;; TODO
+                    (not (stringp fval))
+                    (string-empty-p fval))
                 (insert "\n")
               (insert (format "~%s~\n"
                               (string-trim fval)))))))
