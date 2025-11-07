@@ -157,15 +157,33 @@ used when combined with `pdffontetc-display-font-information'."
                            (string-trim kword))))
                 (insert "\n"))
             (insert (format "- =%s=: " fname))
-            ;; don't format empty strings or values
-            (if (or (null fval)
-                    ;; the following line avoids errors on 'keywords if not a string, but should be fixed ;; TODO
-                    (not (stringp fval))
-                    (string-empty-p fval))
+                      
+            (if (or (null fval) ;; don't format empty values or strings
+                    (and (and (stringp fval) (string-empty-p fval)))) 
                 (insert "\n")
-              (insert (format "~%s~\n"
-                              (string-trim fval)))))))
-      (org-mode)
+              ;; if not empty, then check
+              (if (stringp fval)               ;; make sure the object is a string
+                  ;; if so, then format it:
+                  (insert (format "~%s~\n"
+                                  (string-trim fval)))
+                ;; otherwise, if it's a list instead,
+                ;; try car'ing through the apparent list,
+                ;;  until we've reached a non list item
+                (while (listp fval)
+                  (setq fval (car fval)))
+
+                ;; TODO: check for edge cases here? (for symbols?)
+                (if (not (stringp fval))  ;; if this isn't a string, 
+                    (insert "\n")        ;; leave the value blank
+                  ;; but if it indeed is a non-empty string
+                  (if (not (string-empty-p fval))
+                      ;; then format it
+                      (insert (format "~%s~\n"
+                                      (string-trim fval)))
+                    ;; otherwise, if it's an empty string at the end of all this
+                    (insert "\n")  ;; leave value blank
+                    )))))))
+    (org-mode)
       (org-fold-show-all)
       (read-only-mode 1)
       (when (null combined)
