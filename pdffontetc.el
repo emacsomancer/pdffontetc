@@ -6,10 +6,10 @@
 
 ;; Author: Benjamin Slade <slade@lambda-y.net>
 ;; Maintainer: Benjamin Slade <slade@lambda-y.net>
-;; URL: https://addme.com
-;; Package-Version: 0.1
-;; Version: 0.1
-;; Package-Requires: ((emacs "24.4") (org "9.4"))
+;; URL: https://github.com/emacsomancer/pdffontetc
+;; Package-Version: 0.15
+;; Version: 0.15
+;; Package-Requires: ((emacs "24.4"))
 ;; Created: 2025-03-08
 ;; Keywords: files, multimedia
 
@@ -36,14 +36,13 @@
 ;; miscellaneous commands for PDF and PDF font metadata; supplement to PDF-Tools
 
 ;;; Installation:
-;; May end up in PDF-Tools (see https://github.com/vedang/pdf-tools/pull/314) and/or MELPA.
-;; But for now, see the README.org for other options.
-;;
-;; Or, to install manually, clone the git repo somewhere and put it in your
+;; To install manually, clone the git repo somewhere and put it in your
 ;; load-path, e.g., add something like this to your init.el:
 ;; (add-to-list 'load-path
 ;;             "~/.emacs.d/pdffontetc/")
 ;;  (require 'pdffontetc)
+;;
+;; See README.org for other options.
 
 
 ;;; Usage:
@@ -65,22 +64,15 @@
 ;;
 ;; (add-hook 'pdf-view-mode-hook #'pdffontetc-extra-keys)
 
-
-;;; Notes (for me):
-;; Maybe bindings:
-;; - T: 'typefaces' = font information
-;; - O: 'Org-style' metadata
-;; - U: unified display
-
 ;;; Code:
 
 ;;;; Requires
 
 (require 'pdf-view)
 (require 'pdf-util)
-;; (require 'imenu)
 (require 'pdf-tools) ; for `pdf-tools-pdf-buffer-p'
-(require 'org)
+(eval-when-compile
+  (require 'org))
 
 ;;;; misc helper functions
 (defun pdffontetc--merge-cons-to-string (lst)

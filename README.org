@@ -23,9 +23,7 @@ The metadata command is more or less functionally equivalent with the one alread
 
 The PDF Tools metadata functionality has been around for a while, and I often use it. I was frustrated because I wanted to be able to see information about fonts as well, and would always have to drop out to a terminal to get this information. Now I don't have to anymore.
 
-(I have submitted a [[https://github.com/vedang/pdf-tools/pull/314][pull request]] to merge this functionality into PDF Tools, but in case this doesn't happen and/or in the meantime, it is here as a separate add-on package.)
-
-Maybe shadow PDF Tools ~pdf-misc-minor-mode~ map in your init, or otherwise add convenient keybindings (maybe under =:config= in your =use-package=):
+You may want to shadow PDF Tools' ~pdf-misc-minor-mode~ map in your init, or otherwise add convenient keybindings (maybe under =:config= in your =use-package=):
 #+begin_src elisp
 (defun pdffontetc-extra-keys ()
     "Set some additional keybindings in PDF-Tools for pdffontetc info functions."
@@ -40,7 +38,9 @@ Maybe shadow PDF Tools ~pdf-misc-minor-mode~ map in your init, or otherwise add 
 #+end_src
 
 ** Installation
-Easiest if you're using Emacs 30 or above is the [[https://git.savannah.gnu.org/cgit/emacs.git/commit/?id=2ce279680bf9c1964e98e2aa48a03d6675c386fe][built-in]] ~vc-use-package~. If you use an alternative/supplement package manager already, you probably know what you're doing. Otherwise:
+
+*** From MELPA
+[pending]
 
 *** Manual
 Clone this repo or copy the ~pdffontetc.el~ file somewhere and load it via =init.el=, e.g., copy to =~/.emacs.d/lisp/pdffontetc/= and put in your =init.el=:
@@ -50,7 +50,10 @@ Clone this repo or copy the ~pdffontetc.el~ file somewhere and load it via =init
   (require 'pdffontetc)
 #+end_src
 
-*** vc-use-package [built-in]
+*** With bespoke package managers
+The easiest if you're using Emacs 30 or above is the [[https://git.savannah.gnu.org/cgit/emacs.git/commit/?id=2ce279680bf9c1964e98e2aa48a03d6675c386fe][built-in]] ~vc-use-package~. 
+
+**** vc-use-package [built-in]
 Included in Emacs 30+. Probably the easiest method:
 #+begin_src elisp
 (use-package pdffontetc
@@ -58,27 +61,30 @@ Included in Emacs 30+. Probably the easiest method:
                     :branch "main")
   :ensure t)
 #+end_src
-*** vc-use-package [separately packaged]
+
+If you use an alternative/supplement package manager already, you probably know what you're doing. But some tips for different options:
+
+**** vc-use-package [separately packaged]
 The [[https://github.com/slotThe/vc-use-package][non-built-in version]] of vc-use-package uses slightly different syntax:
 #+begin_src elisp
 (use-package pdffontetc
   :vc (:fetcher github :repo "emacsomancer/pdffontetc")
   :ensure t)
 #+end_src
-*** elpaca
+**** elpaca
 With [[https://github.com/progfolio/elpaca][elpaca]]:
 #+begin_src elisp
 (use-package pdffontetc
   :ensure (:host github :repo "emacsomancer/pdffontetc"))
 #+end_src
-*** straight
+**** straight
 With [[https://github.com/radian-software/straight.el][straight]]:
 #+begin_src elisp
 (use-package pdffontetc
   :straight (pdffontetc :type git :host github :repo "emacsomancer/pdffontetc")
   :ensure t)
 #+end_src
-*** quelpa
+**** quelpa
 With [[https://github.com/quelpa/quelpa][quelpa]]:
 #+begin_src elisp
 (use-package pdffontetc
@@ -87,7 +93,7 @@ With [[https://github.com/quelpa/quelpa][quelpa]]:
 #+end_src
 
 ** Miscellaneous Notes
-*** The pdffonts help key (in ~pdffontetc-pdffonts-man-help~):
+*** The pdffonts help key (available in emacs after the package is loaded via ~pdffontetc-pdffonts-man-help~):
 **** The following information is listed for each font:
   - =name=: the font name, exactly as given in the PDF file (potentially including
     a subset prefix)
