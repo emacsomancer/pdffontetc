@@ -149,7 +149,6 @@ used when combined with `pdffontetc-display-font-information'."
                            (string-trim kword))))
                 (insert "\n"))
             (insert (format "- =%s=: " fname))
-                      
             (if (or (null fval) ;; don't format empty values or strings
                     (and (and (stringp fval) (string-empty-p fval))))
                 (insert "\n")
