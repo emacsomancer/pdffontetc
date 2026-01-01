@@ -153,7 +153,8 @@ used when combined with `pdffontetc-display-font-information'."
                     (and (and (stringp fval) (string-empty-p fval))))
                 (insert "\n")
               ;; if not empty, then check
-              (if (stringp fval)               ;; make sure the object is a string
+              ;; make sure the object is a string
+              (if (stringp fval)
                   ;; if so, then format it:
                   (insert (format "~%s~\n"
                                   (string-trim fval)))
