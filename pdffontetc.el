@@ -76,7 +76,7 @@
 
 ;;;; misc helper functions
 (defun pdffontetc--merge-cons-to-string (lst)
-  "Merge a list `LST' into a white-space separated string."
+  "Merge a list 'LST' into a white-space separated string."
   ;; start with first item to avoid leading space
   (let ((unified-field-string (car lst))
         (remain (cdr lst)))
@@ -114,8 +114,8 @@ returned list are in the same order as in TREE.
 ;;;###autoload
 (defun pdffontetc-display-metadata-org-style (doc &optional combined)
   "Display PDF metadata in a separate buffer in Org-mode style.
-Argument `DOC' defaults to current buffer if it contains a PDF file;
-otherwise queries for a PDF file.  The optional argument `COMBINED' is
+Argument 'DOC' defaults to current buffer if it contains a PDF file;
+otherwise queries for a PDF file.  The optional argument 'COMBINED' is
 used when combined with `pdffontetc-display-font-information'."
   (interactive
    (if (pdf-tools-pdf-buffer-p)
@@ -215,7 +215,7 @@ Information about the PDF font information displayed by
 (defun pdffontetc--extract-pdffonts-info (doc)
   "Non-interactive function to parse the output of `pdffonts'.
 Extracts information from calling `pdffonts' utility on PDF document
-`DOC'.  Called by `pdffontetc-display-font-information'."
+'DOC'.  Called by `pdffontetc-display-font-information'."
   (unless (executable-find "pdffonts")
     (error "System package `pdffonts' must be installed"))
   (let* ((raw
@@ -259,10 +259,10 @@ Extracts information from calling `pdffonts' utility on PDF document
 
 ;;;###autoload
 (defun pdffontetc-display-font-information (doc &optional combined)
-  "Parse the output of `pdffonts' for PDF file `DOC'.
+  "Parse the output of `pdffonts' for PDF file 'DOC'.
 Information is display in an Org-mode table in a temporary buffer.
 Includes explanatory information if called with prefix argument.
-\(I.e., if command is preceded by `C-u'.\) Optional `COMBINED' argument
+\(I.e., if command is preceded by `C-u'.\) Optional 'COMBINED' argument
 alters behaviour for use with
 `pdffontetc-display-combined-metadata-and-font-info'."
   (interactive
@@ -328,7 +328,7 @@ alters behaviour for use with
 ;;;###autoload
 (defun pdffontetc-display-combined-metadata-and-font-info (doc)
   "Show combined PDF metadata and font information.
-Operates on PDF document `DOC', either current buffer, or passed
+Operates on PDF document 'DOC', either current buffer, or passed
 manually, or user is queried to supply one.  \(Prefixed argument
 triggers showing explanatory information for font metadata.\)"
   (interactive
