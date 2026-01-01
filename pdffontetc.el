@@ -215,7 +215,7 @@ Information about the PDF font information displayed by
 (defun pdffontetc--extract-pdffonts-info (doc)
   "Non-interactive function to parse the output of `pdffonts'.
 Extracts information from calling `pdffonts' utility on PDF document
-'DOC'.  Called by `pdffontetc-display-font-information'."
+\='DOC\='.  Called by `pdffontetc-display-font-information'."
   (unless (executable-find "pdffonts")
     (error "System package `pdffonts' must be installed"))
   (let* ((raw
