@@ -2,14 +2,14 @@
 
 ;; pdffontetc - emacs pdffonts info metadata
 
-;; Copyright (C) 2025 Benjamin Slade
+;; Copyright (C) 2025-2026 Benjamin Slade
 
 ;; Author: Benjamin Slade <slade@lambda-y.net>
 ;; Maintainer: Benjamin Slade <slade@lambda-y.net>
 ;; URL: https://github.com/emacsomancer/pdffontetc
 ;; Package-Version: 0.15
 ;; Version: 0.15
-;; Package-Requires: ((emacs "24.4"))
+;; Package-Requires: ((emacs "24.4") (pdf-tools "1.2.0"))
 ;; Created: 2025-03-08
 ;; Keywords: files, multimedia
 
@@ -68,9 +68,9 @@
 
 ;;;; Requires
 
-(require 'pdf-view)
-(require 'pdf-util)
-(require 'pdf-tools) ; for `pdf-tools-pdf-buffer-p'
+;; (require 'pdf-view)
+;; (require 'pdf-util)
+(require 'pdf-tools)
 (eval-when-compile
   (require 'org))
 
@@ -151,7 +151,7 @@ used when combined with `pdffontetc-display-font-information'."
             (insert (format "- =%s=: " fname))
                       
             (if (or (null fval) ;; don't format empty values or strings
-                    (and (and (stringp fval) (string-empty-p fval)))) 
+                    (and (and (stringp fval) (string-empty-p fval))))
                 (insert "\n")
               ;; if not empty, then check
               (if (stringp fval)               ;; make sure the object is a string
@@ -165,7 +165,7 @@ used when combined with `pdffontetc-display-font-information'."
                   (setq fval (car fval)))
 
                 ;; TODO: check for edge cases here? (for symbols?)
-                (if (not (stringp fval))  ;; if this isn't a string, 
+                (if (not (stringp fval))  ;; if this isn't a string,
                     (insert "\n")        ;; leave the value blank
                   ;; but if it indeed is a non-empty string
                   (if (not (string-empty-p fval))
