@@ -46,20 +46,20 @@
 
 
 ;;; Usage:
-;; - Show PDF metadata in an Org-mode temporary buffer via `pdffontetc-display-metadata-org-style'. [Advice: bind to (kbd "O")]
-;; - Show PDF font innformation in a table in an Org-mode temporary buffer via `pdffontetc-display-font-information'. Using prefix (= `C-u' before calling command) to display additional explanatory information/key to pdffonts information. [Advice: bind to (kbd"T")]
-;; - Show both via `pdffontetc-display-combined-metadata-and-font-info'. (Prefix for pdfonts information explainer works here too.) [Advice: bind to (kdb "U")]
+;; - Show PDF metadata in an Org-mode temporary buffer via 'pdffontetc-display-metadata-org-style'. [Advice: bind to (kbd "O")]
+;; - Show PDF font innformation in a table in an Org-mode temporary buffer via 'pdffontetc-display-font-information'. Using prefix (= 'C-u' before calling command) to display additional explanatory information/key to pdffonts information. [Advice: bind to (kbd"T")]
+;; - Show both via 'pdffontetc-display-combined-metadata-and-font-info'. (Prefix for pdfonts information explainer works here too.) [Advice: bind to (kdb "U")]
 
 ;;; Advice:
-;; Maybe shadow PDF-Tools' `pdf-misc-minor-mode-map':
+;; Maybe shadow PDF-Tools' 'pdf-misc-minor-mode-map':
 ;;
 ;; (defun pdffontetc-extra-keys ()
 ;;     "Set some additional keybindings in PDF-Tools for pdffontetc info functions."
-;;     ;; `O' for `Org-style' Info, = pdf metadata in orgish display:
+;;     ;; 'O' for 'Org-style' Info, = pdf metadata in orgish display:
 ;;     (local-set-key (kbd "O") #'pdffontetc-display-metadata-org-style)
-;;     ;; `T' for `Typeface', i.e., Font info [since `F' is already taken]:
+;;     ;; 'T' for 'Typeface', i.e., Font info [since 'F' is already taken]:
 ;;     (local-set-key (kbd "T") #'pdffontetc-display-font-information)
-;;     ;; `U' for `Unified' info, i.e., both Metadata and Font info:
+;;     ;; 'U' for 'Unified' info, i.e., both Metadata and Font info:
 ;;     (local-set-key (kbd "U") #'pdffontetc-display-combined-metadata-and-font-info))
 ;;
 ;; (add-hook 'pdf-view-mode-hook #'pdffontetc-extra-keys)
