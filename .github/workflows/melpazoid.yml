@@ -1,9 +1,9 @@
-# melpazoid <https://github.com/emacsomancer/pdffontetc> build checks.
+# melpazoid <https://github.com/riscy/melpazoid> build checks.
 
 # If your package is on GitHub, enable melpazoid's checks by copying this file
 # to .github/workflows/melpazoid.yml and modifying RECIPE and EXIST_OK below.
 
-name: pdffontetc
+name: melpazoid
 on: [push, pull_request]
 
 jobs:
@@ -17,7 +17,7 @@ jobs:
     - name: Install
       run: |
         sudo apt-get install emacs && emacs --version
-        git clone https://github.com/emacsomancer/pdffontetc.git ~/pdffontetc
+        git clone https://github.com/riscy/melpazoid.git ~/melpazoid
     - name: Run
       env:
         LOCAL_REPO: ${{ github.workspace }}
@@ -26,5 +26,5 @@ jobs:
         # set this to true if warnings should be treated as errors:
         WARN_IS_ERROR: false
         # set this to false (or remove it) if the package isn't on MELPA:
-        EXIST_OK: true
-      run: echo $GITHUB_REF && make -C ~/pdffontetc
+        EXIST_OK: false # not yet on MELPA
+      run: echo $GITHUB_REF && make -C ~/melpazoid
