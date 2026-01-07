@@ -175,8 +175,10 @@ used when combined with `pdffontetc-display-font-information'."
                     ;; otherwise, if it's an empty string at the end of all this
                     (insert "\n")  ;; leave value blank
                     )))))))
-    (org-mode)
-      (org-fold-show-all)
+      (when (and ; compiler pacifier
+             (fboundp 'org-table-align)
+             (fboundp 'org-fold-show-all))
+        (org-fold-show-all))
       (read-only-mode 1)
       (when (null combined)
         (switch-to-buffer-other-window temp-buff-name))
@@ -306,10 +308,12 @@ argument alters behaviour for use with
               (insert (format "%s" field)))))
         (insert "\n"))
       (insert "|-")
-      (org-mode)
-      (org-fold-show-all)
-      (org-table-align)
-      (org-table-align) ; needs to be twice to get formatting right
+      (when (and ; compiler pacifier
+             (fboundp 'org-table-align)
+             (fboundp 'org-fold-show-all))
+        (org-fold-show-all)
+        (org-table-align)
+        (org-table-align)) ; needs to be twice to get formatting right
       (goto-char (point-max))
       (when current-prefix-arg
         (insert "\n")
@@ -318,8 +322,9 @@ argument alters behaviour for use with
       (switch-to-buffer-other-window temp-buff-name)
       ;; visual-fill-column-mode will be too narrow
       ;; disable if on:
-      (when (and (boundp 'visual-fill-column-mode)
-             visual-fill-column-mode)
+      (when (and
+             (fboundp 'visual-fill-column-mode)
+             (bound-and-true-p visual-fill-column-mode))
         (visual-fill-column-mode -1))
       (goto-char (point-min)))))
 
