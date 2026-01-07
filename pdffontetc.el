@@ -175,9 +175,8 @@ used when combined with `pdffontetc-display-font-information'."
                     ;; otherwise, if it's an empty string at the end of all this
                     (insert "\n")  ;; leave value blank
                     )))))))
-      (when (and ; compiler pacifier
-             (fboundp 'org-table-align)
-             (fboundp 'org-fold-show-all))
+      (when ; compiler pacifier
+          (fboundp 'org-fold-show-all)
         (org-fold-show-all))
       (read-only-mode 1)
       (when (null combined)
@@ -258,6 +257,41 @@ Extracts information from calling `pdffonts' utility on PDF document
                   object-id)
                  pdffont-values)))))
     pdffont-values))
+
+(defun pdffontetc--extract-exif-info (doc)
+  "Non-interactive function to parse the output of `exiftool -a -G1 '.
+Extracts information from calling `exiftool' utility on PDF document
+\='DOC\='.  Called by `pdffontetc-display-exif-information'."
+  (unless (executable-find "exiftool")
+    (error "System package `exiftool' must be installed"))
+  (let* ((raw
+          (remove ""
+                 (split-string
+                  (shell-command-to-string
+                   (concat "exiftool -a -G1 \"" doc "\""))
+                  "\n")))
+         (body (cddr raw))
+         (exiftool-out nil))
+    (cl-labels ((whitespace-clean
+                 (str)
+                 (replace-regexp-in-string
+                  "\s$" ""
+                  (replace-regexp-in-string
+                   "^\s" ""
+                   (replace-regexp-in-string
+                    "\s+" " "
+                    str)))))
+               (dolist (line raw)
+                 (let ((raw-exif-info (split-string line ":")))
+                   (let ((label (nth 0 raw-exif-info))
+                         (value (nth 1 raw-exif-info)))
+                     (setq exiftool-out
+                           (cons
+                            (cons
+                             (whitespace-clean label)
+                             (whitespace-clean value))
+                            exiftool-out)))))
+               (nreverse exiftool-out))))
 
 ;;;###autoload
 (defun pdffontetc-display-font-information (doc &optional combined)
