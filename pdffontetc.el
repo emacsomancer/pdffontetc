@@ -176,8 +176,10 @@ used when combined with `pdffontetc-display-font-information'."
                     (insert "\n")  ;; leave value blank
                     )))))))
       (when ; compiler pacifier
-          (fboundp 'org-fold-show-all)
-        (org-fold-show-all))
+          (org-mode)
+          (org-mode)
+          (fboundp 'org-fold-show-all
+                   (org-fold-show-all)))
       (read-only-mode 1)
       (when (null combined)
         (switch-to-buffer-other-window temp-buff-name))
@@ -343,8 +345,11 @@ argument alters behaviour for use with
         (insert "\n"))
       (insert "|-")
       (when (and ; compiler pacifier
+             (fboundp 'org-mode)
              (fboundp 'org-table-align)
              (fboundp 'org-fold-show-all))
+        (org-mode)
+        (org-mode) ; double-tap org-mode (not sure why)
         (org-fold-show-all)
         (org-table-align)
         (org-table-align)) ; needs to be twice to get formatting right
