@@ -314,6 +314,7 @@ argument alters behaviour for use with
         (org-mode)
         (org-mode) ; double-tap for some reason
         (org-fold-show-all)
+        (org-fold-show-all)
         (org-table-align)
         (org-table-align)) ; needs to be twice to get formatting right
       (goto-char (point-max))
