@@ -176,8 +176,8 @@ used when combined with `pdffontetc-display-font-information'."
                     (insert "\n")  ;; leave value blank
                     )))))))
       (when ; compiler pacifier
-          (fboundp 'org-fold-show-all
-                   (org-fold-show-all)))
+          (fboundp 'org-fold-show-all)
+        (org-fold-show-all))
       (read-only-mode 1)
       (when (null combined)
         (switch-to-buffer-other-window temp-buff-name))
