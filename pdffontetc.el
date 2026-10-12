@@ -69,11 +69,27 @@
 ;;;; Requires
 ;; (require 'pdf-view)
 ;; (require 'pdf-util)
-(require 'pdf-tools) ;; TO-DO evaluate this dependency
+;; (require 'pdf-tools) ;; TO-DO evaluate this dependency
                      ;;  - but probably either need
                      ;;  - or need to duplicate code from pdf-tools
 (eval-when-compile
   (require 'org))
+
+;;;; Defcustoms
+
+(defgroup pdffontetc nil
+  "Support library for PDF documents meta-info."
+  :group 'data)
+
+(defvar pdffontetc-mutool-p (executable-find "mutool"))
+
+(defvar pdffontetc-epdfinfo-p (executable-find "epdfinfo"))
+
+(defvar pdffontetc-pdf-fonts-p (executable-find "pdf-fonts"))
+
+(defvar pdffontetc-exiftool-p (executable-find "exiftool"))
+
+;; maybe more customization
 
 ;;;; Variables & Configurations
 
@@ -131,11 +147,23 @@ returned list are in the same order as in TREE.
   "Merge a list \='LST\=' into a white-space separated string."
   (if (null lst) "" (mapconcat #'identity lst " ")))
 
+(defun pdffontetc-is-pdf-p (filename)
+  "Return t if the file at FILENAME starts with the PDF magic bytes (%PDF)."
+  (when (file-exists-p filename)
+    (with-temp-buffer
+      (insert-file-contents-literally filename nil 0 4)
+      (string-equal (buffer-string) "%PDF"))))
+
 (defun pdffontetc--resolve-pdf-buffer (doc)
-  "Helper to safely resolve DOC path or fallback gracefully."
+  "Helper to safely resolve DOC path if pdf-file is open in current buffer,
+or fallback gracefully and query user for a pdf-file location."
   (or doc 
-      (if (or (pdf-tools-pdf-buffer-p) ;; pdf-tools (poppler)
-              (eq major-mode #'reader-mode)) ;; emacs-reader (mupdf)
+      (if (or
+           (and (fboundp 'pdf-tools-pdf-buffer-p) ;; pdf-tools (poppler)
+                (pdf-tools-pdf-buffer-p)) 
+           (and (fboundp 'reader-mode)            ;; emacs-reader (mupdf)
+                (eq major-mode #'reader-mode))
+           (pdffontetc-is-pdf-p (buffer-file-name))) ;; maybe just use this and skip above two possibilities???
           (buffer-file-name)
         (read-file-name "Choose PDF file:"))))
 

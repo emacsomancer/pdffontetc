@@ -18,9 +18,9 @@ Three basic commands:
 [[file:images/pdffontsetc-screenshot03.jpg]]
 
 ** Remarks, Requirements
-Requires the =pdffonts= utility from [[https://poppler.freedesktop.org/][Poppler]], which is the same PDF toolsuite that the Emacs [[https://github.com/vedang/pdf-tools][PDF Tools package]] uses. And you ideally are also using the PDF Tools package.
+Requires the  the =pdffonts= utility from [[https://poppler.freedesktop.org/][Poppler]], which is the same PDF toolsuite that the Emacs [[https://github.com/vedang/pdf-tools][PDF Tools package]] uses, and optionally =exiftool= [[[https://exiftool.org/]]] for additional font meta-data (useful for PDF-A etc. info).  
 
-Now, initial experimental support has also been added showing information from [[https://exiftool.org][exiftool]], which can access additional potentially important additional PDF information, like PDF/UA.[fn:1]
+So, now, initial support has been added showing information from [[https://exiftool.org][exiftool]], which can access additional potentially important additional PDF information, like PDF/UA.[fn:1]
 
 The metadata command is more or less functionally equivalent with the one already in PDF Tools (in ~pdf-misc.el~), but displays using Org-mode styling.
 
