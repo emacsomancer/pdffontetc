@@ -69,7 +69,9 @@
 ;;;; Requires
 ;; (require 'pdf-view)
 ;; (require 'pdf-util)
-(require 'pdf-tools)
+(require 'pdf-tools) ;; TO-DO evaluate this dependency
+                     ;;  - but probably either need
+                     ;;  - or need to duplicate code from pdf-tools
 (eval-when-compile
   (require 'org))
 
@@ -133,7 +135,7 @@ returned list are in the same order as in TREE.
   "Helper to safely resolve DOC path or fallback gracefully."
   (or doc 
       (if (or (pdf-tools-pdf-buffer-p) ;; pdf-tools (poppler)
-              (reader--render-buffer)) ;; emacs-reader (mupdf)
+              (eq major-mode #'reader-mode)) ;; emacs-reader (mupdf)
           (buffer-file-name)
         (read-file-name "Choose PDF file:"))))
 
