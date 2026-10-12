@@ -33,11 +33,7 @@
 ;; Boston, MA 02110-1301, USA.
 
 ;;; Commentary:
-;; miscellaneous commands for PDF and PDF font metadata; possible supplement to PDF-Tools
-;; external requirements:
-;;                        - `pdffonts' (font information)  <https://github.com/elswork/poppler-utils>
-;; optional external requirements: 
-;;                        - `exiftool' (for advanced pdf meta data) <https://exiftool.org/>
+;; miscellaneous commands for PDF and PDF font metadata; supplement to PDF-Tools
 
 ;;; Installation:
 ;; To install manually, clone the git repo somewhere and put it in your
@@ -136,19 +132,23 @@ returned list are in the same order as in TREE.
 (defun pdffontetc--resolve-pdf-buffer (doc)
   "Helper to safely resolve DOC path or fallback gracefully."
   (or doc 
-      (if (pdf-tools-pdf-buffer-p)
+      (if (or (pdf-tools-pdf-buffer-p) ;; pdf-tools (poppler)
+              (reader--render-buffer)) ;; emacs-reader (mupdf)
           (buffer-file-name)
         (read-file-name "Choose PDF file:"))))
 
 ;;;; Core Render Engine
 
 (defun pdffontetc--render-org-buffer (buffer-name sections &optional combined)
-  "Generic engine to display \='SECTIONS\=' in an Org-mode temp buffer \='buffer-name\='.
-Supports structural grouping overrides via nested lists under :type 'grouped-list'
+  "Generic engine to display \='SECTIONS\=' in an Org-mode
+temp buffer \='buffer-name\='.
+Supports structural grouping overrides via nested lists under
+:type `grouped-list'.
 SECTIONS is a list of plists containing:
-  (:title String :type (list | table | grouped-list | raw) :content Data :headers ListOfStrings)
+  `(:title String :type (list | table | grouped-list | raw)
+ :content Data :headers ListOfStrings)'
 The optional argument \='COMBINED\=' is
-used when combined with `pdffontetc-display-font-information'."
+used when combined with `pdffontetc-display-font-information'."348
   (let ((buf (get-buffer-create buffer-name)))
     (with-current-buffer buf
       (read-only-mode -1)
@@ -269,7 +269,8 @@ Extracts information from calling `pdffonts' utility on PDF document
     (nreverse results)))
 
 (defun pdffontetc--extract-exiftool-accessibility (doc)
-  "Extract specific accessibility and validation features from \='DOC\=' using ExifTool.
+  "Extract specific accessibility and validation features
+ from \='DOC\=' using ExifTool.
 Silences underlying environment localization shell errors safely.
 Returns an alist grouped by ExifTool family bracket keys:
   ((\"[XMP-dc]\" . ((\"Title\" . \"Syllabus...\") (\"Creator\" . \"No Mann\")))
@@ -302,20 +303,19 @@ Returns an alist grouped by ExifTool family bracket keys:
 Argument \='DOC\=' defaults to current buffer if it contains a PDF file;
 otherwise queries for a PDF file.  The optional argument \='COMBINED\=' is
 used when combined with `pdffontetc-display-font-information'."
-  (interactive (list (pdffontetc--resolve-pdf-buffer nil) nil))
-  (let* ((target-doc (pdffontetc--resolve-pdf-buffer doc))
-         (buf-name (if combined "*PDF metadata and font info* from =epdfinfo= server" "*PDF metadata*"))
-         (sections
-          (list
-           (list :title (format "Extended PDF metadata from =exiftools=~:"
-                                (file-name-nondirectory target-doc))
-                 :type 'list
-                 :content (pdffontetc--extract-metadata target-doc))
-           ;; Explicitly set :type to 'grouped-list
-           (list :title "PDF metadata for file \"=%s=\" from exiftools:"
-                 :type 'grouped-list
-                 :content (pdffontetc--extract-exiftool-accessibility target-doc)))))
-    (pdffontetc--render-org-buffer buf-name sections combined)))
+       (interactive (list (pdffontetc--resolve-pdf-buffer nil) nil))
+       (let* ((target-doc (pdffontetc--resolve-pdf-buffer doc))
+              (buf-name (if combined "*PDF metadata and font info* from =epdfinfo= server" "*PDF metadata*"))
+              (sections
+               (list
+                (list :title "Extended PDF metadata from =exiftools=~:")
+                :type 'list
+                :content (pdffontetc--extract-metadata target-doc))
+               ;; Explicitly set :type to 'grouped-list
+               (list :title "PDF metadata for file \"=%s=\" from exiftools:"
+                     :type 'grouped-list
+                     :content (pdffontetc--extract-exiftool-accessibility target-doc))))
+         (pdffontetc--render-org-buffer buf-name sections combined)))
 
 
 ;;;###autoload
